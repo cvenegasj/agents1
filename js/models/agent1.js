@@ -1,12 +1,13 @@
 class Agent1 {
 
-    constructor(positionX, positionY, diameter, groupIdentity, similarityWanted, plugin) {
+    constructor(positionX, positionY, diameter, groupIdentity, similarityWanted) {
         var options = {
             friction: 0,
             frictionAir: 0,
-            restitution: 0.1,
-            inertia: Infinity,
-            inverseInertia: 0
+            frictionStatic: 0,
+            restitution: 0.80,
+            inertia: Infinity
+            //inverseInertia: 0
         };
         this.body = Bodies.circle(positionX, positionY, diameter/2, options);
         Body.setVelocity(this.body, {x: random(-3, 3), y: random(-3, 3)}); // initial velocity
@@ -20,6 +21,7 @@ class Agent1 {
         World.add(engine.world, this.body);
     }
 
+    // show renders the current object to the canvas using p5.js library.
     show() {
         // using p5.js render engine
         noStroke();
@@ -35,6 +37,8 @@ class Agent1 {
         pop();
     }
 
+    // interact receives an object and calculates the attraction or repulsion force depending of 
+    // whether they share the same group identity or not.
     interact(target) {
         var v1 = createVector(target.body.position.x, target.body.position.y);
         var v2 = createVector(this.body.position.x, this.body.position.y);
@@ -48,17 +52,12 @@ class Agent1 {
 
         // update acceleration
         if (this.groupIdentity.name == target.groupIdentity.name) {
-            /*if (dist < 3 * this.diameter / 2) {
-                strength = G / (dist * dist * 10);
-                force.setMag(strength);
-            }*/
-            Body.applyForce(this.body, {x: this.body.position.x, y: this.body.position.y}, {x: force.x, y: force.y});
+            // Only attract if target is not too close (to avoid excessive force within clusters).
+            if (dist > 2 * this.diameter) {
+                Body.applyForce(this.body, {x: this.body.position.x, y: this.body.position.y}, {x: force.x, y: force.y});
+            }
         } else {
             Body.applyForce(this.body, {x: this.body.position.x, y: this.body.position.y}, {x: -force.x, y: -force.y});
         }
-
-        /*if (dist.mag() < 3 * this.diameter / 2) {
-            Body.setVelocity(this.body, {x: 0, y: 0});
-        } */
     }
 }

@@ -7,8 +7,6 @@ let maxSimilarityWanted = 0.5;
 let maxDifferenceWanted = 0.3;
 // model variables
 let agents = [];
-//let groupNames = ["A", "B", "C", "D", "E"]; // 5 groups max
-//let groupColors = [color(255, 233, 0, 0), color(255, 50, 12, 0), color(255, 180, 0, 0), color(255, 117, 0, 0), color(255, 0, 125, 0)]; // https://color.adobe.com/Fire-color-theme-11492842
 let groupIdentities = [];
 
 // visualization variables

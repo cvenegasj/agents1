@@ -22,10 +22,6 @@ class Agent1 {
         this.neighbors = [];
         // find all neighbors and count the ones who have same groupIdentity.
         for (let item of agents) {
-            /*if (this.position.x == item.position.x && this.position.y == item.position.y) {
-                // This is me! Do not count.
-                continue;
-            }*/
             if (this === item) {
                 // This is me! Do not count.
                 continue;
